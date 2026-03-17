@@ -1,0 +1,107 @@
+body {
+  background-color: rgb(246, 235, 251);
+}
+
+#penalty_cards {
+  width: 240px;
+  height: 40px;
+  background-color: rgb(229, 202, 242);
+  color: rgb(255, 255, 255);
+  text-align: right;
+  padding-right: 15px;
+  padding-top: 10px;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.my_btn {
+  background-color: #ffffff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  margin: 5px;
+  color: rgb(0, 0, 0);
+  font-size: 1.5rem;
+  user-select: none;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+}
+
+.my_btn:hover {
+  background-color: rgb(67, 71, 73);
+  color: #ffffff;
+}
+
+.my_btn:active {
+  filter: brightness(110%);
+}
+
+/*темный фиолетовый - #804AFF*/
+.my_btn.priory {
+  background-color: #ac8ef2;
+  color: #ffffff;
+}
+.my_btn.priory:hover {
+  background-color: #804aff;
+  color: #ffffff;
+}
+
+.my_btn.execute {
+  width: 110px;
+  border-radius: 20px;
+}
+
+.my_btn.secondary:hover {
+  background-color: #e4e7ec;
+  color: #000000;
+}
+
+.traficCalculator {
+  width: 280px;
+  height: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
+}
+
+.my_btn.add {
+  width: 240px;
+  border-radius: 20px;
+  background-color: #9269f3;
+  color: #ffffff;
+}
+
+.my_btn.add:hover {
+  background-color: #804aff;
+  color: #ffffff;
+}
+
+.my_btn.add:active {
+  background-color: #804aff;
+}
+
+#ban_screen {
+  border-radius: 20px;
+  font-size: larger;
+  border-color: rgb(255, 0, 0);
+  user-select: none;
+}
+
+#btn_close {
+  text-align: center;
+  margin-left: 210px;
+  border-radius: 10px;
+  user-select: none;
+  cursor: pointer;
+  border: none;
+}
+
+#btn_close:hover {
+  background-color: #e4e7ec;
+}
+
+#btn_close:active {
+  background-color: #bbbdbf;
+}

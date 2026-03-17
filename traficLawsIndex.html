@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./traficLawsStyle.css" />
+    <script type="text/javascript" src="./traficLawsScript.js"></script>
+    <title>traficCalculator</title>
+  </head>
+  <body>
+    <div class="traficCalculator">
+      <div class="screen" id="penalty_cards">0</div>
+      <div>
+        <button class="my_btn secondary" id="btn_clear">C</button>
+        <button class="my_btn secondary" id="btn_pls_mns">+/-</button>
+        <button class="my_btn secondary" id="btn_perc">%</button>
+        <button class="my_btn priory" id="btn_del">/</button>
+      </div>
+      <div>
+        <button class="my_btn" id="btn_digit_7">7</button>
+        <button class="my_btn" id="btn_digit_8">8</button>
+        <button class="my_btn" id="btn_digit_9">9</button>
+        <button class="my_btn priory" id="btn_multip">X</button>
+      </div>
+      <div>
+        <button class="my_btn" id="btn_digit_4">4</button>
+        <button class="my_btn" id="btn_digit_5">5</button>
+        <button class="my_btn" id="btn_digit_6">6</button>
+        <button class="my_btn priory" id="btn_minus">-</button>
+      </div>
+      <div>
+        <button class="my_btn" id="btn_digit_1">1</button>
+        <button class="my_btn" id="btn_digit_2">2</button>
+        <button class="my_btn" id="btn_digit_3">3</button>
+        <button class="my_btn priory" id="btn_plus">+</button>
+      </div>
+      <div>
+        <button class="my_btn" id="btn_digit_0">0</button>
+        <button class="my_btn" id="btn_digit_dot">.</button>
+        <button class="my_btn execute priory" id="btn_=">=</button>
+        <button class="my_btn add" id="btn_bcksp">del</button>
+        <button class="my_btn add" id="btn_violation">
+          violation traffic laws
+        </button>
+      </div>
+    </div>
+    <dialog id="ban_screen">
+      <p>
+        I'm sorry, but you've been blocked due to flagrant violations of traffic
+        laws.
+      </p>
+      <button id="btn_close">Close&Pay violations</button>
+    </dialog>
+  </body>
+</html>
