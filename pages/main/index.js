@@ -1,20 +1,11 @@
 import { ServiceCardComponent } from "../../components/service-card/index.js";
 import { ServicePage } from "../service/index.js";
 
+import { getAllModelsFromDB, addModelToDB } from "../../utils/idb.js";
+
 export class MainPage {
   constructor(parent) {
     this.parent = parent;
-  }
-
-  calculateStats(data) {
-    const prices = data.map((item) => item.price);
-    let sum = 0;
-    let mult = 1;
-    prices.forEach((p) => {
-      sum += p;
-      mult *= p;
-    });
-    return { sum, mult };
   }
 
   getData() {
@@ -24,21 +15,21 @@ export class MainPage {
         title: "Регистрация СИМ",
         text: "Внесение серийного номера самоката в базу мониторинга.",
         price: 1500,
-        src: "./pages/service/registration(1).png",
+        model: "models/Scooter.glb",
       },
       {
         id: 2,
         title: "Оспаривание штрафа",
         text: "Юридическая помощь при ошибочном штрафе с камер.",
         price: 2500,
-        src: "./pages/service/challenging the fine(1).png",
+        model: "models/Security Hat.glb",
       },
       {
         id: 3,
         title: "Курс вождения",
         text: "Практическое обучение ПДД на спецплощадке.",
         price: 1000,
-        src: "./pages/service/driving course(1).png",
+        model: "models/helmet.glb",
       },
     ];
   }
@@ -52,32 +43,78 @@ export class MainPage {
             <div class="container mt-4">
                 <h2 class="mb-4">Услуги контроля ПДД самокатов</h2>
                 
-                <div class="mb-4">
+                <div class="d-flex mb-4 gap-3">
+                    <!-- Поиск -->
                     <input type="text" id="search-input" class="form-control w-50" placeholder="Поиск услуги...">
+                    
+                    <div class="input-group w-50">
+                        <label class="input-group-text" for="upload-model">Загрузить 3D (.glb)</label>
+                        <input type="file" id="upload-model" accept=".glb" class="form-control">
+                    </div>
                 </div>
 
                 <div id="main-page" class="d-flex flex-wrap justify-content-start"></div>
-                <div id="stats-container" class="mt-5 p-3 bg-light border-top"></div>
             </div>
         `;
   }
 
-  // поиск
+  async handleUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const userTitle = prompt(
+      "Введите название новой услуги:",
+      "Новый электросамокат",
+    );
+    const userPrice = prompt("Введите стоимость услуги:", "1000");
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const newService = {
+        title: userTitle || "Новая услуга",
+        text: `Файл: ${file.name}`,
+        price: userPrice || 0,
+        buffer: event.target.result,
+        isUser: true,
+      };
+
+      await addModelToDB(newService);
+      this.refreshCards(); 
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
   clickSearch(e) {
     const searchValue = e.target.value.toLowerCase();
-    const data = this.getData();
-
-    const filteredData = data.filter((item) =>
-      item.title.toLowerCase().includes(searchValue),
-    );
-
-    this.renderCards(filteredData);
+    this.currentSearch = searchValue;
+    this.refreshCards();
   }
 
   clickCard(e) {
     const cardId = e.target.dataset.id;
     const servicePage = new ServicePage(this.parent, cardId);
     servicePage.render();
+  }
+
+  async refreshCards() {
+    const standardData = this.getData();
+    const userData = await getAllModelsFromDB();
+
+    const combinedData = [
+      ...standardData,
+      ...userData.map((m) => ({
+        ...m,
+        id: `user-${m.id}`,
+        model: m.buffer,
+      })),
+    ];
+
+    const searchValue = this.currentSearch || "";
+    const filteredData = combinedData.filter((item) =>
+      item.title.toLowerCase().includes(searchValue),
+    );
+
+    this.renderCards(filteredData);
   }
 
   renderCards(data) {
@@ -88,7 +125,7 @@ export class MainPage {
     });
   }
 
-  render() {
+  async render() {
     this.parent.innerHTML = "";
     const html = this.getHTML();
     this.parent.insertAdjacentHTML("beforeend", html);
@@ -97,14 +134,10 @@ export class MainPage {
       .getElementById("search-input")
       .addEventListener("input", this.clickSearch.bind(this));
 
-    const data = this.getData();
-    this.renderCards(data);
+    document
+      .getElementById("upload-model")
+      .addEventListener("change", this.handleUpload.bind(this));
 
-    const stats = this.calculateStats(data);
-        document.getElementById("stats-container").innerHTML = `
-            <h6>Результаты:</h6>
-            <span>Суммарная стоимость: <strong>${stats.sum} ₽</strong> | </span>
-            <span>Произведение цен: <strong>${stats.mult}</strong></span>
-              `;
+    await this.refreshCards();
   }
 }
