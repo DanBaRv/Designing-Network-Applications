@@ -1,0 +1,167 @@
+{
+  "info": {
+    "_postman_id": "3df4e0be-1b37-4dd7-899a-77a44be1d4c7",
+    "name": "L4_Rules",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53758368",
+    "_collection_link": "https://go.postman.co/collection/53758368-3df4e0be-1b37-4dd7-899a-77a44be1d4c7?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "1. Получение всех штрафов",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/rules",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "rules"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. Поиск штрафа по названию",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/rules?title=Переход дороги",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "rules"
+          ],
+          "query": [
+            {
+              "key": "title",
+              "value": "Переход дороги"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. Поиск штрафа по ID",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/rules/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "rules",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Создание нового правила",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "    {\r\n        \"title\": \"Езда на заднем колесе\",\r\n        \"description\": \"Запрещена езда на заднем колесе\",\r\n        \"fine\": 3000\r\n    }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/rules",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "rules"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Обновление правил",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Переход дороги в неположенном месте\",\r\n    \"description\": \"Запрещено переходить/переезжать дорогу в неположенном месте\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/rules/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "rules",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Удаление правила",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/rules/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3001",
+          "path": [
+            "rules",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
