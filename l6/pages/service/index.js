@@ -10,10 +10,13 @@ export class ServicePage {
     this.id = id;
   }
 
-  getData() {
-    ajax.get(rulesUrls.getRulesById(this.id), (data) => {
+  async getData() {
+    try {
+      const data = await ajax.get(rulesUrls.getRulesById(this.id));
       this.renderData(data);
-    });
+    } catch (error) {
+      console.error("Ошибка при получении данных:", error);
+    }
   }
 
   getHTML() {
@@ -28,17 +31,17 @@ export class ServicePage {
     const mainPage = new MainPage(this.parent);
     mainPage.render();
   }
-    ////////////////////////
-    renderData(data) {
-      if (!data) return;
-      this.pageRoot.insertAdjacentHTML(
-        "beforeend",
-        `<h1 class="mt-4 mb-3">${data.title}</h1>`,
-      );
+  ////////////////////////
+  renderData(data) {
+    if (!data) return;
+    this.pageRoot.insertAdjacentHTML(
+      "beforeend",
+      `<h1 class="mt-4 mb-3">${data.title}</h1>`,
+    );
 
-      this.pageRoot.insertAdjacentHTML(
-        "beforeend",
-        `
+    this.pageRoot.insertAdjacentHTML(
+      "beforeend",
+      `
         <div class="mb-4">
             <img src="${data.src}" 
                  class="img-fluid" 
@@ -46,19 +49,18 @@ export class ServicePage {
                  alt="${data.title}">
         </div>
       `,
-      );
-      const accordion = new ServiceAccordionComponent(this.pageRoot);
-      accordion.render(data);
-    }
+    );
+    const accordion = new ServiceAccordionComponent(this.pageRoot);
+    accordion.render(data);
+  }
 
-    ////////////////////////
+  ////////////////////////
 
   render() {
     this.parent.innerHTML = "";
 
     const html = this.getHTML();
     this.parent.insertAdjacentHTML("beforeend", html);
-
 
     const backButton = new BackButtonComponent(this.pageRoot);
     backButton.render(this.clickBack.bind(this));

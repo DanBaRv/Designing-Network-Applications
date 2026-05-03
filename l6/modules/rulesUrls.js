@@ -15,11 +15,11 @@ class RulesUrls {
     return `${this.baseUrl}/rules`;
   }
 
-  removeRulesById() {
+  removeRulesById(id) {
     return `${this.baseUrl}/rules/${id}`;
   }
 
-  updateRulesById() {
+  updateRulesById(id) {
     return `${this.baseUrl}/rules/${id}`;
   }
 }

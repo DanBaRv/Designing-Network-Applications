@@ -50,3 +50,31 @@
   background-color: #36393d !important;
   color: white;
 }
+
+#save-add-btn {
+    background-color: #804aff !important;
+    color: white !important;
+
+}
+#save-add-btn:hover {
+  background-color: #36393d !important;
+  color: white !important;
+}
+#save-add-btn:active {
+  background-color: #36393d !important;
+  color: white;
+}
+
+#save-edit-btn {
+    background-color: #804aff !important;
+    color: white !important;
+
+}
+#save-edit-btn:hover {
+  background-color: #36393d !important;
+  color: white !important;
+}
+#save-edit-btn:active {
+  background-color: #36393d !important;
+  color: white;
+}

@@ -33,18 +33,22 @@ export class EditRulePage {
                         <input type="text" id="input-src" class="form-control" 
                                value="${data.src || ""}">
                     </div>
-                    
+                    <div class="d-flex gap-2 mt-4">
+                      <button id="save-edit-btn" class="btn btn-primary">Сохранить изменения</button>
                     <div id="back-btn-place"></div>
-                    <p class="text-muted mt-3"><small>* Сохранение будет в ЛР №6</small></p>
+                  </div>
                 </div>
             </div>
         `;
   }
 
-  getData() {
-    ajax.get(rulesUrls.getRulesById(this.id), (data) => {
+  async getData() {
+    try {
+      const data = await ajax.get(rulesUrls.getRulesById(this.id));
       this.render(data);
-    });
+    } catch (error) {
+      console.error("Ошибка при получении данных:", error);
+    }
   }
 
   clickBack() {
@@ -52,14 +56,37 @@ export class EditRulePage {
     mainPage.render();
   }
 
+  async saveRule() {
+    const updatedData = {
+      title: document.getElementById("input-title").value,
+      description: document.getElementById("input-description").value,
+      fine: parseInt(document.getElementById("input-fine").value),
+      src: document.getElementById("input-src").value,
+    };
+
+    try {
+      const url = rulesUrls.updateRulesById(this.id);
+      await ajax.patch(url, updatedData);
+
+      console.log("Данные успешно обновлены!");
+      this.clickBack();
+    } catch (error) {
+      console.error("Ошибка при сохранении:", error);
+    }
+  }
+
   render(data) {
     if (!data) {
       this.getData();
       return;
     }
-
     this.parent.innerHTML = "";
     this.parent.insertAdjacentHTML("beforeend", this.getHTML(data));
+
+    const saveBtn = document.getElementById("save-edit-btn");
+    if (saveBtn) {
+      saveBtn.onclick = () => this.saveRule();
+    }
 
     const backButton = new BackButtonComponent(
       document.getElementById("back-btn-place"),

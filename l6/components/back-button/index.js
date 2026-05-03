@@ -9,7 +9,7 @@ export class BackButtonComponent {
 
   getHTML() {
     return `
-        <button id="back-button" class="btn btn-dark" type="button" style="margin-top: 20px;">
+        <button id="back-button" class="btn btn-dark" type="button" style="margin-top: 0px;">
             &larr; Вернуться к услугам
         </button>
     `;

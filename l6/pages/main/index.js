@@ -5,7 +5,6 @@ import { ajax } from "../../modules/ajax.js";
 import { AddRulePage } from "../add-rule/index.js";
 import { EditRulePage } from "../edit-rule/index.js";
 
-
 rulesUrls.getRules();
 
 export class MainPage {
@@ -24,10 +23,14 @@ export class MainPage {
     return { sum, mult };
   }
 
-  getData() {
-    ajax.get(rulesUrls.getRules(), (data) => {
+  async getData() {
+    try {
+      const data = await ajax.get(rulesUrls.getRules());
+
       this.renderData(data);
-    });
+    } catch (error) {
+      console.error("Ошибка при получении данных:", error);
+    }
   }
 
   get pageRoot() {
@@ -65,11 +68,21 @@ export class MainPage {
     const servicePage = new ServicePage(this.parent, cardId);
     servicePage.render();
   }
-  clickDelete(e) {
+
+  async clickDelete(e) {
     const id = e.target.dataset.idDelete;
-    console.log(
-      `Нажата кнопка удаления для ID: ${id}. Запрос на сервер не отправляется согласно заданию.`,
-    );
+
+   
+      try {
+        await ajax.delete(rulesUrls.removeRulesById(id));
+
+        this.render();
+
+        console.log(`Услуга ${id} удалена из файла rules.json`);
+      } catch (error) {
+        console.error("Ошибка при удалении:", error);
+      }
+    
   }
 
   renderCards(data) {
@@ -79,13 +92,19 @@ export class MainPage {
       card.render(item, this.clickCard.bind(this));
     });
   }
+
+
+
   clickEdit(e) {
     const cardId = e.target.dataset.idEdit;
     const addPage = new EditRulePage(this.parent, cardId);
     addPage.render();
   }
+
   ////////////////////////
   renderData(items) {
+    if (!items) return;
+    this.pageRoot.innerHTML = "";
     items.forEach((item) => {
       const serviceCard = new ServiceCardComponent(this.pageRoot);
 
@@ -103,10 +122,16 @@ export class MainPage {
     this.parent.innerHTML = "";
     const html = this.getHTML();
     this.parent.insertAdjacentHTML("beforeend", html);
-    document.getElementById("add-new-rule").addEventListener("click", () => {
-      const addPage = new AddRulePage(this.parent);
-      addPage.render();
-    });
+
+    const addBtn = document.getElementById("add-new-rule");
+    if (addBtn) {
+      addBtn.onclick = () => {
+        console.log("Клик по кнопке 'Добавить' на главной!"); 
+        const addPage = new AddRulePage(this.parent);
+        addPage.render();
+      };
+    }
+
     this.getData();
   }
 }
