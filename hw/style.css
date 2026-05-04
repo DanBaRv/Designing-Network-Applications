@@ -1,0 +1,47 @@
+.bg-purple {
+    background-color: #804aff !important;
+}
+
+.btn-purple {
+    background-color: #804aff !important;
+    color: white !important;
+    border-radius: 12px;
+    padding: 8px 20px;
+}
+
+.btn-purple:hover {
+    background-color: #36393d !important;
+    transition: 0.3s;
+}
+
+#search-input {
+    border: 2px solid #804aff;
+    border-radius: 20px;
+}
+
+.card {
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.badge.bg-success {
+    background-color: #28a745 !important;
+}
+
+.accordion-button:hover {
+  background-color: #e9ecef;
+  color: #000000;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #804aff;
+}
+
+
+.accordion-button:active {
+  background-color: #ac8ef2;
+  color: white;
+}
