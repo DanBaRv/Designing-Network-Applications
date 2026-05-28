@@ -1,0 +1,16 @@
+[
+{
+  "id": 1,
+  "title": "Езда на заднем колесе",
+  "description": "Запрещена езда на заднем колесе",
+  "fine": 30000,
+  "src": "service/challenging the fine(1).png" 
+},
+{
+  "id": 2,
+  "title": "Регистрация СИМ",
+  "description": "Мы берем на себя все бюрократические процессы...",
+  "fine": 8506,
+  "src": "service/registration(1).png"
+}
+]

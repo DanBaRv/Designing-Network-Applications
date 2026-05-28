@@ -1,17 +1,15 @@
 const express = require("express");
 const path = require("path");
-const rulesRouter = require("./routes/rules.js");
-const rulesService = require("./services/rulesFilterService.js");
-//const cors = require("cors");
+const penaltiesRouter = require("./routes/penalties.js");
+const penaltiesService = require("./services/penaltiesFilterService.js");
 const app = express();
 const PORT = 3001;
 
-const DATA_FILE_PATH = path.join(__dirname, "data/rules.json");
+const DATA_FILE_PATH = path.join(__dirname, "data/penalties.json");
 
-rulesService.init(DATA_FILE_PATH);
-//app.use(cors()); 
+penaltiesService.init(DATA_FILE_PATH);
+
 app.use(express.static(path.join(__dirname, "..", "public")));
-
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -19,7 +17,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/rules", rulesRouter);
+app.use("/penalties", penaltiesRouter);
 
 app.use((req, res) => {
   res.status(404).json({ error: "Маршрут не найден" });
